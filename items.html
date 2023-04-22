@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Base</title>
+
+    <!-- Tab icon -->
+    <link rel="icon" href="static_files/images/svt_2.png" />
+
+    <!-- Here both Jquery, jquery css and jquery-ui.js file -->
+    <link rel="stylesheet" href="static_files/css/jquery-ui.css" />
+    <script src="static_files/js/jquery.js"></script>
+    <script src="static_files/js/jquery-ui.min.js"></script>
+
+    <!-- Till here -->
+
+    <!-- For Bootstrap -->
+    <script src="static_files/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static_files/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="static_files/css/fontawesome/all.css" />
+
+    <style>
+      .cards {
+        display: flex;
+        justify-content: space-between;
+      }
+      img {
+        width: 200px; /* You can set the dimensions to whatever you want */
+        height: 200px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body onload="welcomeFunction()">
+    <div class="centered">
+      <section class="cards"></section>
+
+      <div class="col-md-12 text-center">
+        <button type="button" id="go-to-cart" class="btn btn-primary">
+          Go To Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- For Script -->
+
+    <script type="text/javascript">
+      let item_list = [
+        {
+          id: 1,
+          image_src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQF-7hD0IhGf_aQ4JSrFtuL2qNipyEHP-EJFEWutJN&s",
+        },
+        {
+          id: 2,
+          image_src:
+            "https://c0.wallpaperflare.com/preview/630/289/257/notes-write-fountain-pen-filler.jpg",
+        },
+        {
+          id: 3,
+          image_src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2xShLPw_q7A_WA22g4rQpWCWrQ5kloDr3dPYGaCM&s",
+        },
+        {
+          id: 4,
+          image_src:
+            "https://cdn.mos.cms.futurecdn.net/q3NVYX9QB7AUY3WE483VoY.jpg",
+        },
+        { id: 5, image_src: "https://images6.alphacoders.com/330/330109.jpg" },
+      ];
+
+      var selected_items = [];
+
+      function welcomeFunction() {
+        if (localStorage.getItem("remaining_item") == null) {
+          for (i = 0; i < item_list.length; i++) {
+            $(".cards").append(`<div class="m-5"><img
+          class="card-img-top"
+          id=${item_list[i]["id"]}
+          src=${item_list[i]["image_src"]}
+          alt="Card image cap"
+        />
+        <input type="checkbox" name="check-box" id=${item_list[i]["id"]} value=${item_list[i]["image_src"]} /> select item
+        </div>`);
+          }
+        } else {
+          item_list = JSON.parse(localStorage.getItem("remaining_item"));
+
+          for (i = 0; i < item_list.length; i++) {
+            $(".cards").append(`<div class="m-5"><img
+          class="card-img-top"
+          id=${item_list[i]["id"]}
+          src=${item_list[i]["image_src"]}
+          alt="Card image cap"
+        />
+        <input type="checkbox" name="check-box" id=${item_list[i]["id"]} value=${item_list[i]["image_src"]} /> select item
+        </div>`);
+          }
+        }
+      }
+
+      $("#go-to-cart").click(function (e) {
+        e.preventDefault();
+
+        if (JSON.parse(localStorage.getItem("selected_items")) == null) {
+            
+          $("input:checkbox[name=check-box]:checked").each(function () {
+            selected_items.push({ id: this.id, image_src: $(this).val() });
+
+            localStorage.setItem(
+              "selected_items",
+              JSON.stringify(selected_items)
+            );
+
+            item_list = item_list.filter((item) => item.id != this.id);
+
+            localStorage.setItem("remaining_item", JSON.stringify(item_list));
+
+            window.location.href =
+              "file:///C:/Users/prakash.bhanja/Desktop/Project/selected_item.html";
+          });
+        } else {
+
+            selected_items = JSON.parse(localStorage.getItem("selected_items"))
+
+            $("input:checkbox[name=check-box]:checked").each(function () {
+            selected_items.push({ id: this.id, image_src: $(this).val() });
+
+            localStorage.setItem(
+              "selected_items",
+              JSON.stringify(selected_items)
+            );
+
+            item_list = item_list.filter((item) => item.id != this.id);
+
+            localStorage.setItem("remaining_item", JSON.stringify(item_list));
+
+            window.location.href =
+              "file:///C:/Users/prakash.bhanja/Desktop/Project/selected_item.html";
+          });
+
+        }
+      });
+    </script>
+  </body>
+</html>

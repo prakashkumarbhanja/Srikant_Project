@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Base</title>
+
+    <!-- Tab icon -->
+    <link rel="icon" href="static_files/images/svt_2.png" />
+
+    <!-- Here both Jquery, jquery css and jquery-ui.js file -->
+    <link rel="stylesheet" href="static_files/css/jquery-ui.css" />
+    <script src="static_files/js/jquery.js"></script>
+    <script src="static_files/js/jquery-ui.min.js"></script>
+
+    <!-- Till here -->
+
+    <!-- For Bootstrap -->
+    <script src="static_files/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static_files/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="static_files/css/fontawesome/all.css" />
+
+    <style>
+      .cards {
+        display: flex;
+        justify-content: space-between;
+      }
+      img {
+        width: 200px; /* You can set the dimensions to whatever you want */
+        height: 200px;
+        /* object-fit: cover; */
+      }
+    </style>
+  </head>
+  <body onload="getSelectedItem()">
+    <div class="centered">
+        <section class="cards"></section>
+  
+        <div class="col-md-12 text-center">
+          <button type="button" id="add-more-item" class="btn btn-primary">
+            Add More Item
+          </button>
+        </div>
+      </div>
+
+    <!-- For Script -->
+
+    <script type="text/javascript">
+      function getSelectedItem() {
+
+        var selected_item = JSON.parse(localStorage.getItem("selected_items"));
+
+        for (i = 0; i < selected_item.length; i++) {
+          $(".cards").append(`<div class="m-5"><img
+          class="card-img-top"
+          id=${selected_item[i]["id"]}
+          src=${selected_item[i]["image_src"]}
+          alt="Card image cap"
+        />
+        </div>`);
+        }
+      }
+
+      $("#add-more-item").click(function(e){
+        window.location.href = "file:///C:/Users/prakash.bhanja/Desktop/Project/items.html";
+      })
+    </script>
+  </body>
+</html>
